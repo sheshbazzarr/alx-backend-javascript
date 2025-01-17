@@ -7,3 +7,7 @@ package-lock.json
 
 # Ignore .eslintric.js
 .eslintrc.js
+#Ignore babel.config.js
+babel.config.js
+#Ignore datbase.csv
+database.csv
