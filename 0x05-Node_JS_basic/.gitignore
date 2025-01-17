@@ -4,3 +4,6 @@ package.json
 
 # Ignore package-lock.json
 package-lock.json
+
+# Ignore .eslintric.js
+.eslintrc.js
