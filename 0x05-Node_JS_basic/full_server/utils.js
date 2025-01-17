@@ -1,7 +1,6 @@
-const http = require('http');
 const fs = require('fs');
 
-function countStudents(path) {
+module.exports = function readDatabase(path) {
   return new Promise((resolve, reject) => {
     fs.readFile(path, { encoding: 'utf-8' }, (err, data) => {
       if (err) return reject(Error('Cannot load the database'));
@@ -27,41 +26,17 @@ function countStudents(path) {
           ? `, ${list[idxFn]}`
           : list[idxFn];
       });
-
-      all.numberStudents = `Number of students: ${lines.length}\n`;
-      all.listStudents = [];
       for (const key in fields) {
         if (Object.hasOwnProperty.call(fields, key)) {
-          const element = fields[key];
-          all.listStudents.push(`Number of students in ${key}: ${element}. List: ${students[key]}`);
+          const number = fields[key];
+          all[key] = {
+            students: `List: ${students[key]}`,
+            number,
+          };
         }
       }
+
       return resolve(all);
     });
   });
-}
-
-const hostname = '127.0.0.1';
-const port = 1245;
-
-const app = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  if (req.url === '/') res.end('Hello ALX!');
-  if (req.url === '/students') {
-    res.write('This is the list of our students\n');
-    countStudents(process.argv[2])
-      .then((data) => {
-        res.write(data.numberStudents);
-        res.write(data.listStudents.join('\n'));
-        res.end();
-      })
-      .catch((err) => {
-        res.end(err.message);
-      });
-  }
-});
-
-app.listen(port, hostname);
-
-module.exports = app;
+};
