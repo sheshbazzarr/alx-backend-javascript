@@ -1,6 +1,3 @@
-function displayMessage(message)
-{
-    console.log(message);
+const displayMessage = (d) => console.log(d);
 
-}
-module.exporst = displayMessage;
+module.exports = displayMessage;
